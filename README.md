@@ -10,8 +10,10 @@
     - [Enable Azure Monitor for containers](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-onboard)
     - [Enable monitoring of Azure Kubernetes Service (AKS) cluster already deployed](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-enable-existing-clusters)
     - [Install AKS Monitoring Grafana Dashboard With Azure AD Integration Using Helm 2](https://www.stefanroth.net/2019/10/18/azure-monitor-helm-install-aks-monitoring-grafana-dashboard-with-azure-ad-integration/)
+    - [Deploying Grafana](https://www.scaleway.com/en/docs/monitor-kubernetes-cluster-with-grafana/#-Deploying-Grafana)
     - [Running Grafana in Azure Kubernetes Service](https://github.com/PlagueHO/Workshop-AKS)
     - [Using Azure Monitor in Grafana](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/)
+
 
 
 
