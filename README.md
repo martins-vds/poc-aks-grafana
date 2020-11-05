@@ -1,4 +1,6 @@
-# References
+# Proof of Concept - Monitoring AKS with Azure Monitor and Grafana
+
+## References
 
 1. Helm
     - [Installing Helm 3](https://helm.sh/docs/intro/install/)   
