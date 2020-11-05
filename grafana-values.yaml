@@ -1,0 +1,78 @@
+replicas: 2
+
+readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+
+livenessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 60
+  timeoutSeconds: 30
+  failureThreshold: 10
+
+persistence:
+  type: pvc
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  finalizers:
+    - kubernetes.io/pvc-protection
+
+plugins:
+  - grafana-azure-monitor-datasource
+  - grafana-kubernetes-app
+
+datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+          - name: AzureMonitor
+            type: grafana-azure-monitor-datasource
+            orgId: 1
+            typeLogoUrl: public/plugins/grafana-azure-monitor-datasource/img/logo.jpg
+            access: proxy
+            url: /api/datasources/proxy/2
+            isDefault: true
+            jsonData:
+              cloudName: Azure
+              subscriptionId: [SUBSCRIPTION ID]
+              tenantId: [TENANT ID]
+              clientId: [LOG ANALYTICS APP REGISTRATION - CLIENT ID]
+              logAnalyticsDefaultWorkspace: [LOG ANALYTICS WORKSPACE ID]
+              azureLogAnalyticsSameAs: true
+            keepCookies: []
+            secureJsonData:
+              clientSecret: [LOG ANALYTICS APP REGISTRATION - CLIENT SECRET]
+            editable: true
+dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+dashboards:
+        default:
+          azure-monitor:
+            file: dashboards/aks-dashboard.json
+grafana.ini:
+  server:
+    root_url: https://[AKS EXTERNAL URL]/grafana
+  auth.azuread:
+    name: "Azure AD"
+    enabled: true
+    allow_sign_up: true
+    client_id: [GRAFANA APP REGISTRATION - CLIENT ID]
+    client_secret: [GRAFANA APP REGISTRATION - CLIENT SECRET]
+    scopes: openid email profile
+    auth_url: https://login.microsoftonline.com/[TENANT ID]/oauth2/v2.0/authorize
+    token_url: https://login.microsoftonline.com/[TENANT ID]/oauth2/v2.0/token
